@@ -5,12 +5,15 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
     EditText editCodigo,editNome, editTelefone, editEmail;
     Button btnLimpar, btnSalvar, btnExcluir;
     ListView listViewClientes;
+
+    BancoDados db = new BancoDados(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +31,9 @@ public class MainActivity extends AppCompatActivity {
 
         listViewClientes = (ListView) findViewById(R.id.listViewClientes);
 
+        /* TESTES DO CRUD */
+        db.addCliente(new Cliente("Nome 1", "55 5555-5551", "user1@email.com"));
 
+        Toast.makeText(MainActivity.this, "Salvo com sucesso", Toast.LENGTH_LONG).show();
     }
 }
