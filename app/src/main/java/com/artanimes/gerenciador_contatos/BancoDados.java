@@ -116,7 +116,7 @@ public class BancoDados extends SQLiteOpenHelper {
 
     }
 
-    public List<Cliente> listaTodosContatos(){
+    public List<Cliente> listaTodosClientes(){
         List<Cliente> listaClientes = new ArrayList<Cliente>();
 
         String query = "SELECT * FROM " + TABELA_CLIENTE;

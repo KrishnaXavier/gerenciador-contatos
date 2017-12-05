@@ -17,6 +17,7 @@
         android:inputType="number"
         android:ems="10"
         android:id="@+id/editCodigo"
+        android:enabled="false"
         android:hint="Código" />
 
     <EditText
