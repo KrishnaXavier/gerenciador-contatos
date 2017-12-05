@@ -1,9 +1,11 @@
 package com.artanimes.gerenciador_contatos;
 
+import android.app.Service;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -25,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
     ArrayAdapter<String> adapter;
     ArrayList<String> arrayList;
 
+    InputMethodManager inputMethodManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
         btnSalvar = (Button)findViewById(R.id.btnSalvar);
         btnExcluir = (Button)findViewById(R.id.btnExcluir);
         btnLimpar = (Button)findViewById(R.id.btnLimpar);
+
+        inputMethodManager =(InputMethodManager) this.getSystemService(Service.INPUT_METHOD_SERVICE);
 
         listViewClientes = (ListView) findViewById(R.id.listViewClientes);
 
@@ -68,38 +74,62 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        /* TESTES DO CRUD */
+        btnSalvar.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                String codigo = editCodigo.getText().toString();
+                String nome = editNome.getText().toString();
+                String telefone = editTelefone.getText().toString();
+                String email = editEmail.getText().toString();
 
-        /* insert ok
-        db.addCliente(new Cliente("Nome 1", "55 5555-5551", "user1@email.com"));
-        db.addCliente(new Cliente("Nome 2", "55 5555-5551", "user2@email.com"));
-        db.addCliente(new Cliente("Nome 3", "55 5555-5551", "user3@email.com"));
-        db.addCliente(new Cliente("Nome 4", "55 5555-5551", "user4@email.com"));
-        db.addCliente(new Cliente("Nome 5", "55 5555-5551", "user5@email.com"));
-        Toast.makeText(MainActivity.this, "Salvo com sucesso", Toast.LENGTH_LONG).show();
-        */
+                if(nome.isEmpty()){
+                    editNome.setError("Este campo é obrigatório");
+                }else if(codigo.isEmpty()){
+                    /* insert */
+                    db.addCliente(new Cliente(nome, telefone, email));
+                    Toast.makeText(MainActivity.this, "Cliente Adicionado com sucesso", Toast.LENGTH_LONG).show();
 
-        /* apagar ok
-        Cliente cliente = new Cliente();
-        cliente.setCodigo(3);
-        db.apagarCliente(cliente);
-        */
-        //Toast.makeText(MainActivity.this, "Apagado com sucesso", Toast.LENGTH_LONG).show();
+                    limpaCampos();
+                    listarClientes();
+                    escodeTeclado();
 
-        /* select ok
-        Cliente cliente = db.selecionarCliente(2);
-        Log.d("Cliente selecionado", "Codigo: "+cliente.getCodigo() + ", Nome: "+cliente.getNome() + ", Telefone: "+cliente.getTelefone() + ", Email: "+cliente.getEmail());
-        */
+                }else{
+                    /* update */
+                    db.atualizaCliente(new Cliente(Integer.parseInt(codigo), nome, telefone, email));
+                    Toast.makeText(MainActivity.this, "Cliente Atualizado com sucesso", Toast.LENGTH_LONG).show();
+                    limpaCampos();
+                    listarClientes();
+                    escodeTeclado();
+                }
 
-        /* update ok
-        Cliente cliente = new Cliente();
-        cliente.setCodigo(1);
-        cliente.setNome("Nome editado 1");
-        cliente.setTelefone("55 55555555");
-        cliente.setEmail("super-user1@email.com");
-        db.atualizaCliente(cliente);
-        Toast.makeText(MainActivity.this, "Atualizado com sucesso", Toast.LENGTH_LONG).show();
-        */
+            }
+        });
+
+        btnExcluir.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                String codigo = editCodigo.getText().toString();
+
+                if(codigo.isEmpty()){
+                    Toast.makeText(MainActivity.this, "Nenhum cliente está selecionado", Toast.LENGTH_LONG).show();
+                }else{
+                    Cliente cliente = new Cliente();
+                    cliente.setCodigo(Integer.parseInt(codigo));
+                    db.apagarCliente(cliente);
+
+                    Toast.makeText(MainActivity.this, "Cliente excluido com sucesso", Toast.LENGTH_LONG).show();
+
+                    limpaCampos();
+                    listarClientes();
+                }
+            }
+        });
+
+        inserteExemplo();
+    }
+
+    void escodeTeclado(){
+        inputMethodManager.hideSoftInputFromWindow(editNome.getWindowToken(), 0);
     }
 
     void limpaCampos(){
@@ -125,4 +155,13 @@ public class MainActivity extends AppCompatActivity {
             adapter.notifyDataSetChanged();
         }
     }
+
+    void inserteExemplo(){
+        db.addCliente(new Cliente("Luiz Pereira Ricarod", "(53) 987653527", "ririca12@gmail.com"));
+        db.addCliente(new Cliente("Felipe Souza", "(53) 994633527", "gonsalves.souza@email.com"));
+        db.addCliente(new Cliente("Fernado Krauz", "(53) 984533512", "lele1990@gmail.com"));
+        db.addCliente(new Cliente("Leonel Fonseca", "(53) 981325632", "fonseca.9012@email.com"));;
+
+    }
+
 }
