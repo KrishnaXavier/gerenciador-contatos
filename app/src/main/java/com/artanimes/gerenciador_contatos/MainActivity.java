@@ -2,6 +2,7 @@ package com.artanimes.gerenciador_contatos;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -32,8 +33,25 @@ public class MainActivity extends AppCompatActivity {
         listViewClientes = (ListView) findViewById(R.id.listViewClientes);
 
         /* TESTES DO CRUD */
-        db.addCliente(new Cliente("Nome 1", "55 5555-5551", "user1@email.com"));
 
+        /* insert ok */
+        db.addCliente(new Cliente("Nome 1", "55 5555-5551", "user1@email.com"));
+        db.addCliente(new Cliente("Nome 2", "55 5555-5551", "user2@email.com"));
+        db.addCliente(new Cliente("Nome 3", "55 5555-5551", "user3@email.com"));
+        db.addCliente(new Cliente("Nome 4", "55 5555-5551", "user4@email.com"));
+        db.addCliente(new Cliente("Nome 5", "55 5555-5551", "user5@email.com"));
         Toast.makeText(MainActivity.this, "Salvo com sucesso", Toast.LENGTH_LONG).show();
+
+        /* apagar ok
+        Cliente cliente = new Cliente();
+        cliente.setCodigo(3);
+        db.apagarCliente(cliente);
+        */
+
+        Toast.makeText(MainActivity.this, "Apagado com sucesso", Toast.LENGTH_LONG).show();
+
+        Cliente cliente = db.selecionarCliente(2);
+
+        Log.d("Cliente selecionado", "Codigo: "+cliente.getCodigo() + ", Nome: "+cliente.getNome() + ", Telefone: "+cliente.getTelefone() + ", Email: "+cliente.getEmail());
     }
 }

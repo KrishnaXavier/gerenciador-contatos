@@ -12,7 +12,7 @@
 
 
     <EditText
-        android:layout_width="150px"
+        android:layout_width="250px"
         android:layout_height="wrap_content"
         android:inputType="number"
         android:ems="10"
