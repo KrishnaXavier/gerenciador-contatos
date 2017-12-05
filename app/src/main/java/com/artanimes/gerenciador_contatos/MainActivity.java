@@ -43,6 +43,13 @@ public class MainActivity extends AppCompatActivity {
 
         listarClientes();
 
+        btnLimpar.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                limpaCampos();
+            }
+        });
+
         listViewClientes.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id){
@@ -93,6 +100,15 @@ public class MainActivity extends AppCompatActivity {
         db.atualizaCliente(cliente);
         Toast.makeText(MainActivity.this, "Atualizado com sucesso", Toast.LENGTH_LONG).show();
         */
+    }
+
+    void limpaCampos(){
+        editCodigo.setText("");
+        editNome.setText("");
+        editTelefone.setText("");
+        editEmail.setText("");
+
+        editNome.requestFocus();
     }
 
     public void listarClientes(){
