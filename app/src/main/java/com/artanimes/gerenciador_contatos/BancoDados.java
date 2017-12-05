@@ -7,6 +7,9 @@ import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Krishna Pessoal on 04/12/2017.
  */
@@ -111,5 +114,28 @@ public class BancoDados extends SQLiteOpenHelper {
                 new String[] {String.valueOf(cliente.getCodigo())}
                 );
 
+    }
+
+    public List<Cliente> listaTodosContatos(){
+        List<Cliente> listaClientes = new ArrayList<Cliente>();
+
+        String query = "SELECT * FROM " + TABELA_CLIENTE;
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        Cursor c = db.rawQuery(query, null);
+
+        if(c.moveToFirst()){
+            do{
+                Cliente cliente = new Cliente();
+                cliente.setCodigo(Integer.parseInt(c.getString(0)));
+                cliente.setNome(c.getString(1));
+                cliente.setTelefone(c.getString(2));
+                cliente.setEmail(c.getString(3));
+
+                listaClientes.add(cliente);
+            }while(c.moveToNext());
+        }
+
+        return listaClientes;
     }
 }
