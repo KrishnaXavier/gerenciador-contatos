@@ -94,6 +94,22 @@ public class BancoDados extends SQLiteOpenHelper {
         );
 
         return  cliente1;
+    }
+
+    void atualizaCliente(Cliente cliente){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(COLUNA_NOME, cliente.getNome());
+        values.put(COLUNA_TELEFONE, cliente.getTelefone());
+        values.put(COLUNA_EMAIL, cliente.getEmail());
+
+        db.update(
+                TABELA_CLIENTE,
+                values,
+                COLUNA_CODIGO + " = ?",
+                new String[] {String.valueOf(cliente.getCodigo())}
+                );
 
     }
 }

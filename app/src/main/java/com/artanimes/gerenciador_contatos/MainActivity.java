@@ -34,24 +34,33 @@ public class MainActivity extends AppCompatActivity {
 
         /* TESTES DO CRUD */
 
-        /* insert ok */
+        /* insert ok
         db.addCliente(new Cliente("Nome 1", "55 5555-5551", "user1@email.com"));
         db.addCliente(new Cliente("Nome 2", "55 5555-5551", "user2@email.com"));
         db.addCliente(new Cliente("Nome 3", "55 5555-5551", "user3@email.com"));
         db.addCliente(new Cliente("Nome 4", "55 5555-5551", "user4@email.com"));
         db.addCliente(new Cliente("Nome 5", "55 5555-5551", "user5@email.com"));
         Toast.makeText(MainActivity.this, "Salvo com sucesso", Toast.LENGTH_LONG).show();
+        */
 
         /* apagar ok
         Cliente cliente = new Cliente();
         cliente.setCodigo(3);
         db.apagarCliente(cliente);
         */
+        //Toast.makeText(MainActivity.this, "Apagado com sucesso", Toast.LENGTH_LONG).show();
 
-        Toast.makeText(MainActivity.this, "Apagado com sucesso", Toast.LENGTH_LONG).show();
-
+        /* select ok
         Cliente cliente = db.selecionarCliente(2);
-
         Log.d("Cliente selecionado", "Codigo: "+cliente.getCodigo() + ", Nome: "+cliente.getNome() + ", Telefone: "+cliente.getTelefone() + ", Email: "+cliente.getEmail());
+        */
+
+        Cliente cliente = new Cliente();
+        cliente.setCodigo(1);
+        cliente.setNome("Nome editado 1");
+        cliente.setTelefone("55 55555555");
+        cliente.setEmail("super-user1@email.com");
+        db.atualizaCliente(cliente);
+        Toast.makeText(MainActivity.this, "Atualizado com sucesso", Toast.LENGTH_LONG).show();
     }
 }
