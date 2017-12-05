@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
         Log.d("Cliente selecionado", "Codigo: "+cliente.getCodigo() + ", Nome: "+cliente.getNome() + ", Telefone: "+cliente.getTelefone() + ", Email: "+cliente.getEmail());
         */
 
+        /* update ok
         Cliente cliente = new Cliente();
         cliente.setCodigo(1);
         cliente.setNome("Nome editado 1");
@@ -62,5 +63,6 @@ public class MainActivity extends AppCompatActivity {
         cliente.setEmail("super-user1@email.com");
         db.atualizaCliente(cliente);
         Toast.makeText(MainActivity.this, "Atualizado com sucesso", Toast.LENGTH_LONG).show();
+        */
     }
 }
